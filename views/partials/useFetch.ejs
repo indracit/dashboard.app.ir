@@ -1,0 +1,17 @@
+<script>
+    // routing through pages 
+    var requestUrl='/mis';
+
+// reusable fetch api
+const useFetch= async (url,requestMethod,data)=>{
+return await fetch(url,
+    {
+        method: requestMethod,
+        body: data,
+    }).then(response=>response.json()).catch((error) => {
+        console.log(error.message);
+        if(error.message == 'Failed to fetch') throw "Request has forbidden by antivirus!";
+    });
+    
+}
+</script>

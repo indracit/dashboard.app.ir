@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" >
+    <head>
+        <%- include('partials/meta') %>
+    </head>
+    <body data-bs-theme="light">
+        <%- include('partials/nav') %>
+        <section class="container">
+                <!-- reports page  -->
+                <article id="reports">
+                    <div class="card shadow-lg p-3 mb-5 bg-body rounded">
+                    <h5 class="card-header">Reports</h5>
+                    <div class="container">
+                        <form class="d-flex m-2" id="formReport">
+                                <select class="m-2 form-control" name="type" id="report" required>
+                                    <option value="" selected disabled>select report</option>
+                                    <option value="FISTACK_INB_VERIFICATION">Verification report</option>
+                                    <option value="FISTACK_INB_BCTXN">Transaction report</option>
+                                    <option value="FISTACK_ACCOMODATIVE_REPORT">Accomodative report</option>
+                                    <option value="FISTACK_AJY_ENR">A-Enrol report</option>
+                                    <option value="FISTACK_AJY_RDFD">A-RDFD report</option>
+                                    <option value="FISTACK_VENDORWISE_REPORT">Vendor wise report</option>
+                                    <option value="FISTACK_INB_BCLOGIN">Bc login report</option>
+                                    <option value="FIG_BIFURGATION_REPORT">Bifurgation report</option>
+                                    <option value="FIG_AJAY_TXN_REPORT">A-Txn report</option>
+                                </select>
+                                <input class="m-2 form-control" type="date" id="fromdate" name="fromdate">
+                                <input class="m-2 form-control" type="date" id="todate" name="todate">
+                                <input class="btn m-2  btn-primary  btn-sm" type="submit" value="Export" >
+                        </form>
+                        </div>
+                        </div >
+                        <!-- loader  -->
+                        <div id="reportLoader" class="text-center mt-5">
+                            <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                            </div>
+                        </div>
+                        <div id="reportAlert">
+                            <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                                <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                                    <path
+                                        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                                </symbol></svg>
+                        <div class="alert alert-success d-flex alert-dismissible fade show align-items-center mt-3" role="alert">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+                                <use xlink:href="#check-circle-fill" />
+                            </svg>
+                            <div>
+                                Report Downloaded Successfully!
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        </div>
+                    </article>
+        </section>
+        <%- include('partials/darkMode') %>
+        <%- include('partials/navActive') %>
+        <%- include('partials/useFetch') %>
+        <%- include('partials/script') %>
+        <script>
+            formReport.onsubmit = async (e) => handleSubmit(e, formReport,'reportLoader');
+        </script>
+    </body>
+</html>

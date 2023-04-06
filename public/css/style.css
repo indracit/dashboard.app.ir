@@ -1,0 +1,56 @@
+
+.nav-link:hover{
+    background-color:#367fa9;
+    transform: scale(1.04);
+    transition: all .2s;
+}
+.navbar{
+    padding: 0;
+}
+.navbar .navbar-nav .nav-link{
+    padding: 1em;
+    transition: all .2s;
+}
+#reportLoader,#monitorLoader,#reportAlert,#syncLoader,#searchLoader,#tdrLoader,#bifurLoader,#bcwiseLoader,#accLoader{
+    display: none;
+}
+.navbar .navbar-nav li.active > a {
+    background-color: #367fa9;
+    color: #fff;
+}
+
+#nav-mode{
+    color: #fff;
+
+}
+#nav-mode:hover{
+    color : #dedcdc;
+}
+
+.btn-primary:hover{
+    background-color: #367fa9 !important;
+    border-color: #367fa9;
+    transform: scale(1.1);
+    transition: all .2s;
+}
+.btn-primary, .btn-primary:active, .btn-primary:visited  {
+background-color: #3c8dbc !important;
+border-color: #3c8dbc;
+}
+.navcard {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 12px 40px 0 rgba(0, 0, 0, 0.19);
+}
+
+@media only screen and (max-width: 600px) {
+#formReport,#formMonitor,#formSync,#formSearchaof,#formSearchagentdetails{
+flex-direction: column;
+}
+#navul{
+margin-top: 3%;
+}
+}
+@media only screen and (min-width: 768px) {
+#navheight{
+height: 60px;
+}
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('partials/meta') %>
+    </head>
+    <body data-bs-theme="light">
+        <%- include('partials/nav') %>
+        <section class="container" >
+        <!-- nav bar  -->
+                <article id="sync">
+                    <div class="card shadow-lg p-3 mb-3 bg-body rounded">
+                        <h5 class="card-header">Data Sync</h5>
+                        <div class="container">
+                            <form class="d-flex m-2" id="formSync">
+                                <select class="form-control m-2" name="type" id="sync" required>
+                                    <option value="" selected disabled>select sync</option>
+                                    <option value="FISTACK_SYNC_AOFNO">Aofno Sync</option>
+                                    <option value="FIG_SYNC_AJAY_TXN_REPORT">A-txn Sync</option>
+                                    <option value="FIG_SYNC_BIFURGATION">Bifurgation Sync</option>
+                                </select>
+                                <input class="m-2 form-control" type="date" id="fromdate" name="fromdate">
+                                <input class="m-2 form-control" type="date" id="todate" name="todate">
+                                <input class="btn m-2  btn-primary  btn-sm" type="submit" value="Sync">
+                            </form>
+                        </div>
+                    </div>
+                    <div id="aftersync" class="m-4 text-center"></div>
+                    <!-- loader  -->
+                    <div id="syncLoader" class="text-center mt-5">
+                        <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                        </div>
+                    </div>
+                </article>
+        </section>
+        <%- include('partials/darkMode') %>
+        <%- include('partials/navActive') %>
+        <%- include('partials/useFetch') %>
+        <%- include('partials/script') %>
+        <script>
+            formSync.onsubmit = async (e) => handleSubmit(e,formSync,'syncLoader')
+        </script>
+    </body>
+</html>

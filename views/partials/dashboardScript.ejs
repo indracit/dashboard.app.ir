@@ -1,0 +1,54 @@
+
+<script>
+
+window.addEventListener("load", (event) => {
+
+    const tdr=()=>{
+        const loader = document.getElementById('tdrLoader')
+        //enabling loader here
+        loader.style.display = 'block';
+        formData = new FormData();
+        formData.append('type','FIG_CHECK_TDR_PARSING')
+        useFetch(requestUrl,'POST',formData).then((data)=>{
+            let bodydata= `<div class="card shadow-lg p-3 mb-5 bg-body rounded"><h5 class="card-header">Tdr Last Parsed </h5><table class="table "><thead><tr><th>Time</th><th>Vendorid</th></tr></thead><tbody>`
+            for (let i = 0; i <= 5; i++) {
+                bodydata += `<tr><td>${data[i]['max']}</td><td>${data[i]['itgs_vendor_id']}</td></tr>`}
+                bodydata+=`</tbody></table></div>`
+                loader.style.display = 'none';
+            return document.getElementById('tdr').innerHTML = bodydata
+        })
+    }
+    const bifur = () => {
+        const loader = document.getElementById('bifurLoader')
+        //enabling loader here
+        loader.style.display = 'block';
+    formData = new FormData();
+    formData.append('type', 'FIG_CHECK_BIFURGATION')
+    useFetch(requestUrl, 'POST', formData).then((data) => {
+        bodydata =`<div class="card shadow-lg p-3 mb-3 bg-body rounded"><div class="card-header">Bifurgation Last Synced</div><div class="card-body"><h6>${data[0]['max']}</h6></div></div>`
+        loader.style.display = 'none';
+        return document.getElementById('bifur').innerHTML = bodydata
+    })
+}
+    const bcac = () => {
+    const loader1 = document.getElementById('bcwiseLoader')
+    const loader2 = document.getElementById('accLoader')
+    //enabling loader here
+    loader1.style.display = 'block';
+    loader2.style.display = 'block';
+    formData = new FormData();
+    formData.append('type', 'FISTACK_LAST_BCACC')
+    useFetch(requestUrl, 'POST', formData).then((data) => {
+        bcwisedata = `<div class="card shadow-lg p-3 mb-3 bg-body rounded"><div class="card-header">Bcwise report Last Synced</div><div class="card-body"><h6>${data[0][0]}</h6></div></div>`
+        accdata = `<div class="card shadow-lg p-3 mb-3 bg-body rounded"><div class="card-header">Accomodative report Last Synced</div><div class="card-body"><h6>${data[0][1]}</h6></div></div>`
+        loader1.style.display = 'none';
+        loader2.style.display = 'none';
+        document.getElementById('bcwise').innerHTML = bcwisedata
+        return document.getElementById('acc').innerHTML = accdata
+    })}
+    tdr()
+    bifur()
+    bcac()
+    
+});
+</script>

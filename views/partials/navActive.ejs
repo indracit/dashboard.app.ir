@@ -1,0 +1,15 @@
+<script>
+
+    const activeids = {
+        '/dashboard' : '#li-dashboard',
+        '/monitoring' : '#li-monitoring',
+        '/reports' : '#li-reports',
+        '/syncdata' : '#li-syncdata',
+        '/searchdetails' : '#li-searchdetails'
+    }
+
+    let path = location.pathname;
+
+    $(activeids[path]).addClass("active");
+
+</script>

@@ -1,0 +1,183 @@
+
+            
+
+            <script type="text/javascript">
+
+                    // response-parser-middleware
+                    const respParser = (data) => {
+                            var parsedData = []
+                            for (row of data) {
+                                parsedData.push(Object.values(row))
+                            }
+                            return parsedData
+                        }
+
+                    // download reports
+                    const download = function (data,typeValue) {
+                            const blob = new Blob([data], { type: 'text/csv' });
+                            const url = window.URL.createObjectURL(blob)
+                            const a = document.createElement('a')
+                            a.setAttribute('href', url)
+                            const reportName = typeValue+'_'+new Date().toISOString();
+                            a.setAttribute('download', `${reportName}.csv`);
+                            a.click();
+                        }
+
+                        // csv maker
+                    const csvmaker = function (data, exportHeader) {
+                            let csvRows = [];
+                            csvRows.push(exportHeader.join('|'));
+                            for(let row of data){
+                            const values = row.join('|');
+                            csvRows.push(values);
+                            }
+                            return csvRows.join('\n')
+                        }
+
+                        const displayobj = (data, header) => {
+                                let tablebody = ''
+                                for (i = 0; i <= 16; i++) {
+                                    tablebody += `<tr><td> <div class="container"><div class="row"><div class="fw-bold col-sm">${header[i]}</div><div class="col-sm">${data[0][i]}</div></div></div></td></tr>`
+                                }
+                                return outputTable = `<div class="card shadow-lg p-3 mb-3 bg-body rounded"><table class="table table-borderless"> 
+						<tbody>
+						${tablebody}
+						</tbody>
+						</table></div>`
+                            }
+
+                        // display data in table 
+                        const displayTable=(data,header)=>{
+                            let tableHeader = '';
+                            let tableData = '';
+
+                            for(let row of header){
+                                tableHeader += `<th scope="col">${row}</th>`
+                            }
+                            
+                            for(let row of data){
+                                tableData +='<tr>'
+                                for(let col of row){
+                                    tableData += `<td>${col}</td>`
+                                }
+                                tableData +='</tr>'
+                            }
+                            
+                        return outputTable = `<div class="card shadow-lg p-3 mb-3 bg-body rounded"><table class="table"> 
+						<thead class="thead-light">
+							<tr>
+							${tableHeader}
+							</tr>
+						</thead>
+						<tbody>
+							${tableData}
+						</tbody>
+						</table></div>`
+                        }
+
+                            // header needed for reports
+                            const headers = {
+                                'FISTACK_INB_BCTXN': ['bank', 'date(Transaction_Time)', 'id_customer_info', 'id_terminal_info', 'cust_cards', 'sweep_txn', 'sweep_amt', 'txn_cnt', 'txn_amt', 'scot_txn', 'ifis_txn', 'rupay_txn', 'aeps_txn', 'fund_transfer_txn', 'offline_txn', 'total_cr_txn', 'total_dr_txn', 'total_cr_amt', 'total_dr_amt', 'scot_amt', 'scot_cr_txn', 'scot_cr_amt', 'scot_dr_txn', 'scot_dr_amt', 'ifis_amt', 'ifis_cr_txn', 'ifis_cr_amt', 'ifis_dr_txn', 'ifis_dr_amt', 'rupay_amt', 'rupay_cr_txn', 'rupay_cr_amt', 'rupay_dr_txn', 'rupay_dr_amt', 'aeps_amt', 'aeps_cr_txn', 'aeps_cr_amt', 'aeps_dr_txn', 'aeps_dr_amt', 'fund_transfer_amt', 'offline_amt', 'offline_cr_txn', 'offline_cr_amt', 'offline_dr_txn', 'offline_dr_amt', 'aadhaar_login', 'exported_on', 'unique_txn_cust_count', 'accom_txn_count', 'accom_txn_amt', 'self_txn', 'self_txn_amt', 'split_txn', 'split_txn_amt', 'accom_ft_cnt', 'accom_ft_amt', 'balance_zero', 'balance_zero_amt', 'imps_count', 'imps_amt', 'onus_txn_count', 'onus_txn_amt', 'offus_txn_count', 'offus_txn_amt', 'aeps_onus_count', 'aeps_offus_count', 'aeps_onus_amt', 'aeps_offus_amt', 'rupay_onus_count', 'rupay_offus_count', 'rupay_onus_amt', 'rupay_offus_amt', 'tpd_txn_count', 'tpd_txn_amt', 'bbps_txn', 'bbps_amt', 'shg_txn', 'shg_amt', 'shg_cr_txn', 'shg_cr_amt', 'shg_dr_txn', 'shg_dr_amt', 'imps_cr_txn', 'imps_cr_amt', 'total_fin_txn', 'total_fin_amt', 'total_nonfin_cnt', 'aeps_onus_cr_cnt', 'aeps_onus_cr_amt', 'aeps_onus_dr_cnt', 'aeps_onus_dr_amt', 'aeps_onus_ft_cnt', 'aeps_onus_ft_amt', 'aeps_offus_cr_cnt', 'aeps_offus_cr_amt', 'aeps_offus_dr_cnt', 'aeps_offus_dr_amt', 'aeps_offus_ft_cnt', 'aeps_offus_ft_amt', 'rupay_onus_cr_cnt', 'rupay_onus_cr_amt', 'rupay_onus_dr_cnt', 'rupay_onus_dr_amt', 'rupay_offus_cr_cnt', 'rupay_offus_cr_amt', 'rupay_offus_dr_cnt', 'rupay_offus_dr_amt', 'unique_txn_cust_count', 'total_be_txn', 'total_mini_stmt_txn', 'aeps_onus_non_fin', 'aeps_onus_bal_enq', 'aeps_onus_mini_stmt', 'aeps_offus_non_fin', 'aeps_offus_bal_enq', 'aeps_offus_mini_stmt', 'rupay_onus_non_fin', 'rupay_onus_bal_enq', 'rupay_onus_mini_stmt', 'rupay_offus_non_fin', 'rupay_offus_bal_enq', 'rupay_offus_mini_stmt'],
+                                'FISTACK_INB_VERIFICATION': ['DATE', 'bcwise_txn_cnt', 'bcwise_success_amt', 'enrol_cnt', 'mis_txn_cnt', 'mis_success_amt', 'txn_txn_cnt', 'txn_success_amt'],
+                                'FISTACK_INB_TXN_MONITORING': ['SerialNo','GatewayRRN', 'VendorID', 'RespToClient', 'Amount', 'ServiceName', 'ONUS', 'ServerTime'],
+                                'FISTACK_ENR_MONITORING': ['enrolstatus', 'receivedon', 'vendorid', 'reason'],
+                                'FISTACK_ACCOMODATIVE_REPORT' : ['Bank', 'TransactionID', 'STAN', 'RRN', 'GatewayRRN', 'TransactionTime', 'CBSTerminalID', 'Agentcode', 'CustAccountNumber', 'CustAadhaarNumber', 'BenfAadhaarNumber', 'transaction_type', 'Amount', 'Application_type', 'ServiceName', 'senttobank', 'txn_with_fp', 'cust_id_customer_info', 'FN_DECRYPT(CustomerCardNumber)', 'exported_on', 'IIN', 'a', 'b', 'c', 'Accomodative_txn', 'inserted_on'],
+                                'FISTACK_AJY_ENR': ['agentcode', 'success_count', 'failure_count', 'exported_on'],
+                                'FISTACK_AJY_RDFD': ['month', 'state', 'district', 'agentcode', 'firstname', 'RD_count', 'RD_amount', 'FD_count', 'FD_amount', 'DDP_count', 'DDP_amount', 'MIP_count', 'MIP_amount', 'exported_on'],
+                                'FISTACK_VENDORWISE_REPORT': ['generated_date','trans_date', 'vendor_id', 'vendor_name', 'success_txn_count', 'enrolment_success'],
+                                'FISTACK_INB_BCLOGIN': ['report_date', 'daily_count', 'monthly_count', 'active_count'],
+                                'FIG_AJAY_TXN_REPORT': ['monthname_', 'branchname', 'state', 'district', 'agentcode', 'bc_name', 'is_login_type_aadhaar', 'distinct_txn_cust', 'no_of_days_bc_worked', 'aeps_credit_count', 'aeps_debit_count', 'aeps_credit_amt', 'aeps_debit_amt', 'ifis_credit_count', 'ifis_debit_count', 'ifis_credit_amt', 'ifis_debit_amt', 'rupay_credit_count', 'rupay_debit_count', 'rupay_credit_amt', 'rupay_debit_amt', 'fund_transfert_count', 'fund_transfert_amt', 'balance_amt', 'total_txn', 'total_amt', 'total_credit_count', 'total_credit_amt', 'total_debit_count', 'total_debit_amt', 'todays_txn', 'exported_on', 'tpd_count', 'tpd_amt'],
+                                'FIG_BIFURGATION_REPORT': ['itgs_request_time', 'cash_deposit_count_onus_success', 'cash_deposit_amt_onus_success', 'cash_wd_onus_success', 'cash_wd_amt_onus_success', 'cash_ft_onus_success', 'cash_ft_amt_onus_success', 'purchase_onus_success', 'purchase_amt_onus_success', 'be_onus_success', 'ms_onus_success', 'cash_deposit_count_offus_acq_success', 'cash_deposit_amt_offus_acq_success', 'cash_wd_offus_acq_success', 'cash_wd_amt_offus_acq_success', 'cash_ft_offus_acq_success', 'cash_ft_amt_offus_acq_success', 'purchase_offus_acq_success', 'purchase_amt_offus_acq_success', 'be_offus_acq_success', 'ms_offus_acq_success', 'cash_deposit_count_tpd_success', 'cash_deposit_amt_tpd_success', 'cash_deposit_count_onus_failed', 'cash_deposit_amt_onus_failed', 'cash_wd_onus_failed', 'cash_wd_amt_onus_failed', 'cash_ft_onus_failed', 'cash_ft_amt_onus_failed', 'purchase_onus_failed', 'purchase_amt_onus_failed', 'be_onus_failed', 'ms_onus_failed', 'cash_deposit_count_offus_acq_failed', 'cash_deposit_amt_offus_acq_failed', 'cash_wd_offus_acq_failed', 'cash_wd_amt_offus_acq_failed', 'cash_ft_offus_acq_failed', 'cash_ft_amt_offus_acq_failed', 'purchase_offus_acq_failed', 'purchase_amt_offus_acq_failed', 'be_offus_acq_failed', 'ms_offus_acq_failed', 'cash_deposit_count_tpd_failed', 'cash_deposit_amt_tpd_failed', 'technical_decline_cnt_onus_financial', 'technical_decline_amt_onus_financial', 'business_decline_cnt_onus_financial', 'business_decline_amt_onus_financial', 'technical_decline_cnt_onus_nonfinancial', 'business_decline_cnt_onus_nonfinancial', 'technical_decline_cnt_offus_acq_financial', 'technical_decline_amt_offus_acq_financial', 'business_decline_cnt_offus_acq_financial', 'business_decline_amt_offus_acq_financial', 'technical_decline_cnt_offus_acq_nonfinancial', 'business_decline_cnt_offus_acq_nonfinancial', 'technical_decline_cnt_tpd', 'technical_decline_amt_tpd', 'business_decline_cnt_tpd', 'business_decline_amt_tpd'],
+                                'FISTACK_AOFNO':['Refno','Status','FirstidNo'],
+                                'FISTACK_INB_BCMASTER': ['agentcode', 'firstname', 'middlename', 'gender', 'state', 'zonalname', 'district', 'villagecode', 'vendorcode', 'vendorname', 'branchcode', 'accountnumber', 'personalaccountno', 'status', 'created_on', 'modified_on', 'Location']
+
+                            }
+                            // you can add downloadable reports here 
+                            const downloadables = ['FISTACK_INB_BCTXN','FISTACK_INB_VERIFICATION', 'FISTACK_ACCOMODATIVE_REPORT','FISTACK_AJY_ENR','FISTACK_AJY_RDFD','FISTACK_VENDORWISE_REPORT','FISTACK_INB_BCLOGIN']
+
+                            // response need parser
+                            const respNeededParser = ['FIG_BIFURGATION_REPORT','FIG_AJAY_TXN_REPORT']
+                            
+                            // syncable
+                            const synctypes = ['FISTACK_SYNC_AOFNO','FIG_SYNC_AJAY_TXN_REPORT','FIG_SYNC_BIFURGATION']
+
+                            const displayable =['FISTACK_INB_TXN_MONITORING_G1','FISTACK_INB_TXN_MONITORING_G2','FISTACK_INB_TXN_MONITORING','FISTACK_ENR_MONITORING']
+
+                            const search=['FISTACK_AOFNO']
+
+                            // form handler 
+                    const handleSubmit = (e,id,loaderId)=>{
+                        e.preventDefault();
+                        const loader = document.getElementById(loaderId)
+                        //enabling loader here
+                        loader.style.display='block';
+                        let alert = document.getElementById('reportAlert');
+                        formData=new FormData(id);
+
+                        // extracting type value from formdata for generating export headers 
+                        const [type, typeValue] = [...formData.entries()][0];
+
+                        const exportHeader= typeValue == 'FISTACK_INB_TXN_MONITORING_G1'|| typeValue == 'FISTACK_INB_TXN_MONITORING_G2' || typeValue == 'FISTACK_INB_TXN_MONITORING' ? headers['FISTACK_INB_TXN_MONITORING'] : headers[typeValue]
+
+                        useFetch(requestUrl,'POST',formData).then((data)=>{
+                                
+                                
+                                if(synctypes.includes(typeValue)){
+                                    loader.style.display = 'none';
+                                    return document.getElementById('aftersync').innerHTML =`<h6 class="card shadow-lg p-3 mb-3 bg-body rounded card-body"> ${typeValue} - Last Synced Date - ${typeValue=='FIG_SYNC_AJAY_TXN_REPORT' ? data[0]['get_reportajay'] : typeValue == 'FIG_SYNC_BIFURGATION' ? data[0]['sync_report_bifurgation'] : data }</h6>`;
+                                }
+                            
+
+                            if (respNeededParser.includes(typeValue)) {
+                                var parsedData = respParser(data);
+                                const csvdata = csvmaker(parsedData, exportHeader);
+                                loader.style.display = 'none';
+                                download(csvdata, typeValue);
+                                return alert.style.display = 'block';
+                            }
+                            
+
+                            //  reports downloading 
+                            if(downloadables.includes(typeValue)) {
+                                const csvdata = csvmaker(data, exportHeader);
+                                loader.style.display = 'none';
+                                download(csvdata, typeValue);
+                                return alert.style.display = 'block';
+                            }
+                            
+                            if(search.includes(typeValue)){
+                                loader.style.display = 'none';
+                                return document.getElementById('searchtable').innerHTML = displayTable(data, exportHeader);
+                            }
+                            //  reports displaying
+                            if(displayable.includes(typeValue)){
+                                loader.style.display = 'none';
+                                return  document.getElementById('table').innerHTML=displayTable(data,exportHeader);
+                            }
+                            if (typeValue=='FISTACK_INB_BCMASTER') {
+                                if(data.length==0) {
+                                    console.log(data);
+                                    loader.style.display = 'none';
+                                    return confirm("kindly check agentcode!");
+                                }
+                                loader.style.display = 'none';
+                                return document.getElementById('searchtable').innerHTML = displayobj(data, exportHeader);
+                            }
+
+
+                        }).catch((error) => {
+                            // error handling and alert generation
+                            if(error=='Request has forbidden by antivirus!'){
+                            if (confirm(error+'\nClick OK to infiltrate Antivirus!')) {
+                                loader.style.display = 'none';
+                                window.open('https://122.252.240.165:6443/ALB/alb-login.html', '_blank');
+                            } else {
+                                alert(error)
+                            }}
+                            else {
+                                console.log(error.message);
+                                confirm(error)
+                            }
+                        });
+                    }
+</script>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('partials/meta') %>
+    </head>
+    <body data-bs-theme="light">
+        <%- include('partials/nav') %>
+        <section class="container">
+                <article id="dashboard">
+                    <div class="container">
+                        <div class="row">
+                        <div id="tdr" class="col-sm-5">
+                            <div id="tdrLoader" class="text-center mt-5">
+                                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="row ">
+                            <div id="bifurLoader" class="text-center mt-5">
+                                <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                                </div>
+                            </div>
+                            <div id="bifur"></div>
+                            </div>
+                            <div class="row ">
+                                <div id="bcwiseLoader" class="text-center mt-5">
+                                    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                                    </div>
+                                </div>
+                                <div id="bcwise"></div>
+                            </div>
+                            <div class="row ">
+                                <div id="accLoader" class="text-center mt-5">
+                                    <div class="spinner-border" style="width: 3rem; height: 3rem;" role="status">
+                                    </div>
+                                </div>
+                                <div id="acc"></div>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </article>
+        </section>
+            <%- include('partials/darkMode') %>
+            <%- include('partials/navActive') %>
+            <%- include('partials/useFetch') %>
+            <%- include('partials/dashboardScript') %>
+    </body>
+</html>
