@@ -1,4 +1,4 @@
-// const {db} = require('../models/db')
+const User = require('../models/user')
 const bcrypt = require('bcrypt');
 
 const getAllUser = async (req,res)=>{
@@ -6,14 +6,30 @@ const getAllUser = async (req,res)=>{
 }
 
 const createUser = async (req,res)=>{
-    const {username,password} = req.body
-    // const userExist = await db('select username from appuser where username = :username',[username])
-    if(userExist.rows.length !=0 && userExist.rows[0].USERNAME == username) return  res.json({message:'username already taken'})
+    const {username,password,roles} = req.body
+    
+    // Confirm data
+    if (!username || !password) {
+        return res.status(400).json({ message: 'All fields are required' })
+    }
+    const duplicate = await User.findOne({ username }).lean().exec()
+
+    if(duplicate) return  res.status(409).json({message:'username already taken'})
+
     const salt = bcrypt.genSaltSync(10);
+
     const hash = bcrypt.hashSync(password, salt);
-    // const createuser = await db(`insert into appuser (username,password) values (:username,:password)`,[username,hash])
-    if(createuser.rowsAffected == 1) return res.json({message:'User Created succesfully'})
-    res.json({message:'user not created'})
+
+    const userObject = (!Array.isArray(roles) || !roles.length)
+        ? { username, "password": hash }
+        : { username, "password": hash, roles }
+
+    const user = await User.create(userObject)
+    if (user) { //created 
+        res.status(201).json({ message: `New user ${username} created` })
+    } else {
+        res.status(400).json({ message: 'Invalid user data received' })
+    }
 }
 
 const updateUser = async (req,res)=>{

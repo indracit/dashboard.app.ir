@@ -7,39 +7,30 @@ const errorHandler = require('./middleware/errorHandler')
 const { logEvents, logger} = require('./middleware/logger')
 const {port} = require('./appConfig.json')
 const session = require('express-session')
-const {createClient} = require('redis')
-const RedisStore = require("connect-redis").default
 const isAuth = require('./middleware/auth')
-let redisClient = createClient()
 const path = require('path')
+const connectDB = require('./config/dbConn')
+const mongoose = require('mongoose')
+var MongoDBStore = require('connect-mongodb-session')(session);
+const {mongoURI} = require('./appConfig.json')
+const {decrypt} = require('./utils/crypto')
+connectDB()
 
+var store = new MongoDBStore({
+    uri: decrypt(mongoURI),
+    collection: 'sessions'
+    });
 
-redisClient.connect().catch((err)=>{
-    console.log(`${err.name}:${err.message}`);
-    logEvents(`${err.name}: ${err.message}`, 'errLog.log')
-})
+  // Catch errors
+    store.on('error', function(error) {
+    console.log(error);
+    logEvents(`${error}`, 'dbErrLog.log')
+    });
 
-redisClient.on("ready", function() {
-    console.log("Redis Connection Successfully Established")
-    logEvents(`Redis Connection Successfully Established`, 'infoLog.log')
-})
-
-redisClient.on("error", function(error) {
-    logEvents(`Redis Connection: Socket Closed Unexpectedly`, 'errLog.log')
-});
-redisClient.on("end", function() {
-    logEvents(`Redis Connection Terminated`, 'infoLog.log')
-})
-
-// Initialize store.
-let redisStore = new RedisStore({
-client: redisClient,
-prefix: "tool.db_session:",
-})
 
 app.use(
     session({
-        store: redisStore,
+        store: store,
       resave: false, // required: force lightweight session keep alive (touch)
       saveUninitialized: false, // recommended: only save session when data exists
     secret: "peter griffin",
@@ -76,4 +67,12 @@ app.listen(port,
         logEvents(`Server running in ${port}`, 'infoLog.log')
     })
 
+    mongoose.connection.once('open', () => {
+        console.log('Connected to MongoDB')
+    })
+    
+    mongoose.connection.on('error', err => {
+        console.log(err)
+        logEvents(`${err.no}: ${err.code}\t${err.syscall}\t${err.hostname}`, 'dbErrLog.log')
+    })
     

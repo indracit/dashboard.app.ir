@@ -1,11 +1,18 @@
-// const {db} = require('../models/db')
 const bcrypt = require('bcrypt')
+const User = require('../models/user')
+
 
 const login = async (req,res)=>{
+
     const {username,password} = req.body;
-    // const userdetails = await db('select username,password from appuser where username=:username',[username])
-    if(userdetails.rows.length==0)return res.render('index',{title:'App.ir',message:'invalid username !!!'})
-    const match = await bcrypt.compare(password, userdetails.rows[0].PASSWORD);
+    if (!username || !password) {
+        return res.status(400).render('index',{title:'App.ir',message:'All fields are required !'})
+    }
+
+    const foundUser = await User.findOne({ username }).exec()
+    if(!foundUser || !foundUser.active)return res.render('index',{title:'App.ir',message:'Un authorized'})
+    const match = await bcrypt.compare(password, foundUser.password);
+
     if(!match) return res.render('index',{title:'App.ir',message:'invalid password !!!'})
     req.session.isAuth = true
     req.session.username = username
@@ -19,3 +26,4 @@ const logout = async (req,res)=>{
     return res.redirect('/')}
 
 module.exports={ login , logout }
+
