@@ -2,7 +2,8 @@ const User = require('../models/user')
 const bcrypt = require('bcrypt');
 
 const getAllUser = async (req,res)=>{
-    res.json({message:'api under construction'})
+    const allUsers = await User.find({}).select('username roles').lean().exec();
+    res.status(200).json({allUsers})
 }
 
 const createUser = async (req,res)=>{
@@ -33,7 +34,9 @@ const createUser = async (req,res)=>{
 }
 
 const updateUser = async (req,res)=>{
-    res.json({message:'api under construction'})
+    const {username,active} = req.body
+    const result = await User.updateOne({ username: username }, { active: active });
+    res.json({result})
 }
 
 const deletUser = async (req,res)=>{

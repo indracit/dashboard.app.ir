@@ -89,17 +89,18 @@
                                 'FIG_AJAY_TXN_REPORT': ['monthname_', 'branchname', 'state', 'district', 'agentcode', 'bc_name', 'is_login_type_aadhaar', 'distinct_txn_cust', 'no_of_days_bc_worked', 'aeps_credit_count', 'aeps_debit_count', 'aeps_credit_amt', 'aeps_debit_amt', 'ifis_credit_count', 'ifis_debit_count', 'ifis_credit_amt', 'ifis_debit_amt', 'rupay_credit_count', 'rupay_debit_count', 'rupay_credit_amt', 'rupay_debit_amt', 'fund_transfert_count', 'fund_transfert_amt', 'balance_amt', 'total_txn', 'total_amt', 'total_credit_count', 'total_credit_amt', 'total_debit_count', 'total_debit_amt', 'todays_txn', 'exported_on', 'tpd_count', 'tpd_amt'],
                                 'FIG_BIFURGATION_REPORT': ['itgs_request_time', 'cash_deposit_count_onus_success', 'cash_deposit_amt_onus_success', 'cash_wd_onus_success', 'cash_wd_amt_onus_success', 'cash_ft_onus_success', 'cash_ft_amt_onus_success', 'purchase_onus_success', 'purchase_amt_onus_success', 'be_onus_success', 'ms_onus_success', 'cash_deposit_count_offus_acq_success', 'cash_deposit_amt_offus_acq_success', 'cash_wd_offus_acq_success', 'cash_wd_amt_offus_acq_success', 'cash_ft_offus_acq_success', 'cash_ft_amt_offus_acq_success', 'purchase_offus_acq_success', 'purchase_amt_offus_acq_success', 'be_offus_acq_success', 'ms_offus_acq_success', 'cash_deposit_count_tpd_success', 'cash_deposit_amt_tpd_success', 'cash_deposit_count_onus_failed', 'cash_deposit_amt_onus_failed', 'cash_wd_onus_failed', 'cash_wd_amt_onus_failed', 'cash_ft_onus_failed', 'cash_ft_amt_onus_failed', 'purchase_onus_failed', 'purchase_amt_onus_failed', 'be_onus_failed', 'ms_onus_failed', 'cash_deposit_count_offus_acq_failed', 'cash_deposit_amt_offus_acq_failed', 'cash_wd_offus_acq_failed', 'cash_wd_amt_offus_acq_failed', 'cash_ft_offus_acq_failed', 'cash_ft_amt_offus_acq_failed', 'purchase_offus_acq_failed', 'purchase_amt_offus_acq_failed', 'be_offus_acq_failed', 'ms_offus_acq_failed', 'cash_deposit_count_tpd_failed', 'cash_deposit_amt_tpd_failed', 'technical_decline_cnt_onus_financial', 'technical_decline_amt_onus_financial', 'business_decline_cnt_onus_financial', 'business_decline_amt_onus_financial', 'technical_decline_cnt_onus_nonfinancial', 'business_decline_cnt_onus_nonfinancial', 'technical_decline_cnt_offus_acq_financial', 'technical_decline_amt_offus_acq_financial', 'business_decline_cnt_offus_acq_financial', 'business_decline_amt_offus_acq_financial', 'technical_decline_cnt_offus_acq_nonfinancial', 'business_decline_cnt_offus_acq_nonfinancial', 'technical_decline_cnt_tpd', 'technical_decline_amt_tpd', 'business_decline_cnt_tpd', 'business_decline_amt_tpd'],
                                 'FISTACK_AOFNO':['Refno','Status','FirstidNo'],
-                                'FISTACK_INB_BCMASTER': ['agentcode', 'firstname', 'middlename', 'gender', 'state', 'zonalname', 'district', 'villagecode', 'vendorcode', 'vendorname', 'branchcode', 'accountnumber', 'personalaccountno', 'status', 'created_on', 'modified_on', 'Location']
-
+                                'FISTACK_INB_BCMASTER': ['agentcode', 'firstname', 'middlename', 'gender', 'state', 'zonalname', 'district', 'villagecode', 'vendorcode', 'vendorname', 'branchcode', 'accountnumber', 'personalaccountno', 'status', 'created_on', 'modified_on', 'Location'],
+                                'FISTACK_REPORT_MASTER_INTERNAL' : ['bank','BANKCODE','id_terminal_info','id_customer_info','branch_id','branch_name','state_name','zone','region','circle','district','mandal','gram_panchayat','terminal_id','merchant_id','cbs_terminal_id','terminal_status','terminal_sl_no','acc_no','bc_corporate_accno','bc_carded_accno','bc_card_id','aadhar_no','pan_number','personal_acc_no','bc_name','bc_pin_code','village_name','type_of_bc','bc_tel_no','bc_status','bc_status1','location_status','location_code','vendorname','type_of_location','location_type','first_session_started_on','last_session_started_on','last_session_closed_on','first_txn_date','last_txn_date','atm_tid','cbs_tid','supervisor_name','inserted_on','last_updated_on','rpt_exported_on'],
+                                'FIG_AUTH_COUNT_REPORT' : ['date','onus_auth_success','onus_auth_failure','acq_auth_success','acq_auth_failure','bc_auth_success','bc_auth_failure']
                             }
                             // you can add downloadable reports here 
-                            const downloadables = ['FISTACK_INB_BCTXN','FISTACK_INB_VERIFICATION', 'FISTACK_ACCOMODATIVE_REPORT','FISTACK_AJY_ENR','FISTACK_AJY_RDFD','FISTACK_VENDORWISE_REPORT','FISTACK_INB_BCLOGIN']
+                            const downloadables = ['FISTACK_INB_BCTXN','FISTACK_INB_VERIFICATION', 'FISTACK_ACCOMODATIVE_REPORT','FISTACK_AJY_ENR','FISTACK_AJY_RDFD','FISTACK_VENDORWISE_REPORT','FISTACK_INB_BCLOGIN','FISTACK_REPORT_MASTER_INTERNAL']
 
                             // response need parser
-                            const respNeededParser = ['FIG_BIFURGATION_REPORT','FIG_AJAY_TXN_REPORT']
+                            const respNeededParser = ['FIG_BIFURGATION_REPORT','FIG_AJAY_TXN_REPORT','FIG_AUTH_COUNT_REPORT']
                             
                             // syncable
-                            const synctypes = ['FISTACK_SYNC_AOFNO','FIG_SYNC_AJAY_TXN_REPORT','FIG_SYNC_BIFURGATION']
+                            const synctypes = ['FISTACK_SYNC_AOFNO','FIG_SYNC_AJAY_TXN_REPORT','FIG_SYNC_AUTH_COUNT','FIG_SYNC_BIFURGATION']
 
                             const displayable =['FISTACK_INB_TXN_MONITORING_G1','FISTACK_INB_TXN_MONITORING_G2','FISTACK_INB_TXN_MONITORING','FISTACK_ENR_MONITORING']
 
@@ -124,7 +125,11 @@
                                 
                                 if(synctypes.includes(typeValue)){
                                     loader.style.display = 'none';
-                                    return document.getElementById('aftersync').innerHTML =`<h6 class="card shadow-lg p-3 mb-3 bg-body rounded card-body"> ${typeValue} - Last Synced Date - ${typeValue=='FIG_SYNC_AJAY_TXN_REPORT' ? data[0]['get_reportajay'] : typeValue == 'FIG_SYNC_BIFURGATION' ? data[0]['sync_report_bifurgation'] : data }</h6>`;
+                                    return document.getElementById('aftersync').innerHTML =`<h6 class="card shadow-lg p-3 mb-3 bg-body rounded card-body"> ${typeValue} - Last Synced Date - 
+                                        ${typeValue=='FIG_SYNC_AJAY_TXN_REPORT' ? data[0]['get_reportajay'] 
+                                        : typeValue == 'FIG_SYNC_BIFURGATION' ? data[0]['sync_report_bifurgation']
+                                        : typeValue == 'FIG_SYNC_AUTH_COUNT' ? data[0]['report_auth_count']
+                                        : data }</h6>`;
                                 }
                             
 
