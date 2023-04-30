@@ -2,7 +2,7 @@ const User = require('../models/user')
 const bcrypt = require('bcrypt');
 
 const getAllUser = async (req,res)=>{
-    const allUsers = await User.find({}).select('username roles').lean().exec();
+    const allUsers = await User.find({}).select('username roles active').lean().exec();
     res.status(200).json({allUsers})
 }
 
@@ -40,7 +40,9 @@ const updateUser = async (req,res)=>{
 }
 
 const deletUser = async (req,res)=>{
-    res.json({message:'api under construction'})
+    const {username,password} = req.body
+    const result = await User.findOneAndDelete({username:username})
+    res.json({message:`user  ${result.username} deleted successfully`})
 }
 
 module.exports = {getAllUser,createUser,updateUser,deletUser}
