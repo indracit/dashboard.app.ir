@@ -45,6 +45,7 @@ app.use(logger)
 app.use('/mis',upload.none(),isAuth,require('./routes/misRoutes'))
 app.use('/user',require('./routes/userRoutes'))
 app.use('/',require('./routes/authRoutes'))
+app.use('/signup',require('./routes/signUpRoute'))
 app.use('/',isAuth,require('./routes/appRoutes'))
 
 

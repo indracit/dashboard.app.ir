@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const authController = require('../controllers/authController')
-const path = require('path')
 
 router.route('/')
         .get((req,res)=>{

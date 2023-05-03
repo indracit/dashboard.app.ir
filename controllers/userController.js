@@ -11,11 +11,11 @@ const createUser = async (req,res)=>{
     
     // Confirm data
     if (!username || !password) {
-        return res.status(400).json({ message: 'All fields are required' })
+        return res.status(400).render('signup',{title:'App.ir | sign up',message:'All fields are required !'})
     }
     const duplicate = await User.findOne({ username }).lean().exec()
 
-    if(duplicate) return  res.status(409).json({message:'username already taken'})
+    if(duplicate) return  res.status(409).render('signup',{title:'App.ir | sign up',message:'Username already taken !'})
 
     const salt = bcrypt.genSaltSync(10);
 
@@ -27,9 +27,9 @@ const createUser = async (req,res)=>{
 
     const user = await User.create(userObject)
     if (user) { //created 
-        res.status(201).json({ message: `New user ${username} created` })
+        return res.redirect('/')
     } else {
-        res.status(400).json({ message: 'Invalid user data received' })
+        res.status(400).render('signup',{title:'App.ir | sign up',message: 'invalid user data'})
     }
 }
 
