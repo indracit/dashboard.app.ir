@@ -14,7 +14,7 @@ router.route('/reports')
 
 router.route('/monitoring')
         .get((req,res)=>{
-    res.render('monitoring',{title:'App.ir | Monitoring',username:req.session.username})
+    res.render('monitoring',{title:'App.ir | Monitor',username:req.session.username})
 })
 
 router.route('/syncdata')
@@ -24,7 +24,7 @@ router.route('/syncdata')
 
 router.route('/searchdetails')
         .get((req,res)=>{
-    res.render('searchdetails',{title:'App.ir | SearchDetails',username:req.session.username})
+    res.render('searchdetails',{title:'App.ir | Search',username:req.session.username})
 })
 
 module.exports = router
